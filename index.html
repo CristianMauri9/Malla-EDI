@@ -2,223 +2,240 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Pedagogía en Educación Diferencial</title>
+  <title>Pedagogía en Educación Diferencial</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #e9f6fc;
       margin: 0;
-      padding: 20px;
+      padding: 1rem;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
       color: #333;
     }
+
     h1 {
       text-align: center;
-      color: #2a7ca3;
+      color: #0077b6;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
+
     .grid {
       display: flex;
       overflow-x: auto;
-      gap: 10px;
-      padding-bottom: 20px;
+      gap: 1rem;
+      padding: 1rem 0;
     }
+
     .semester {
-      background: #cdeefd;
-      padding: 15px;
+      background: #ffffffd9;
       border-radius: 12px;
-      min-width: 240px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem;
+      min-width: 250px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
     }
+
+    .semester:hover {
+      transform: scale(1.02);
+    }
+
     .semester h2 {
       text-align: center;
-      font-size: 18px;
-      color: #11698e;
+      color: #0288d1;
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 2px solid #81d4fa;
+      padding-bottom: 0.3rem;
     }
+
     .subject {
-      background: #fff;
-      border: 2px solid #a0d8ef;
+      background: #e1f5fe;
       border-radius: 8px;
-      margin: 5px 0;
-      padding: 8px;
-      font-size: 14px;
+      padding: 0.6rem 0.8rem;
+      margin: 0.5rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       cursor: pointer;
-      transition: background 0.3s, color 0.3s;
       position: relative;
+      transition: all 0.2s;
     }
+
+    .subject:hover {
+      background: #b3e5fc;
+    }
+
     .subject.completed {
-      background: #b2e7cb;
-      border-color: #59b48d;
-      color: #155b3f;
+      background: #a5d6a7;
       text-decoration: line-through;
+      color: #2e7d32;
+      font-weight: bold;
     }
+
     .subject.locked {
-      background: #f0f0f0;
-      color: #888;
+      background: #eeeeee;
+      color: #999;
       cursor: not-allowed;
+      border-left: 4px solid #ccc;
     }
-    .subject.locked::after {
+
+    .subject.locked:hover::after {
       content: attr(data-tooltip);
       position: absolute;
-      top: 0;
-      left: 100%;
-      margin-left: 8px;
-      background: #222;
-      color: #fff;
-      padding: 5px;
+      bottom: 110%;
+      left: 0;
+      background: #0288d1;
+      color: white;
+      padding: 6px 10px;
       border-radius: 6px;
-      font-size: 12px;
       white-space: nowrap;
-      display: none;
-    }
-    .subject.locked:hover::after {
-      display: block;
+      font-size: 0.75rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
-  <h1>Malla Pedagogía en Educación Diferencial</h1>
+  <h1>Pedagogía en Educación Diferencial</h1>
   <div class="grid" id="malla"></div>
+
   <script>
-    const malla = [
-      {
-        semestre: "1° Semestre",
-        asignaturas: [
-          "Socioantropología Educacional",
-          "Construcción de la Identidad Profesional Docente",
-          "Desarrollo Neurobiológico Humano",
-          "Lingüística",
-          "Procesos Cognitivos en el Aprendizaje Escolar",
-          "Desarrollo de Habilidades de Pensamiento"
-        ]
-      },
-      {
-        semestre: "2° Semestre",
-        asignaturas: [
-          "Filosofía Educacional",
-          "Matemáticas Escolares",
-          "Psicolingüística",
-          "Neurociencias y Educación Especial",
-          "Práctica Pedagógica",
-          "Comunicación Oral y Escrita"
-        ]
-      },
-      {
-        semestre: "3° Semestre",
-        asignaturas: [
-          "Enfoques Curriculares",
-          "Psicología del Aprendizaje y del Desarrollo",
-          "Psicopatología y Educación Especial I",
-          "Trastornos del Desarrollo del Habla, Lenguaje y Comunicación",
-          "Modelos y Teorías de las Dificultades de Aprendizaje Escolar",
-          "Desarrollo de la Comprensión Lectora en Inglés"
-        ]
-      },
-      {
-        semestre: "4° Semestre",
-        asignaturas: [
-          "Gestión Educacional",
-          "Psicopedagogía y Didáctica del Pensamiento Lógico-Matemático",
-          "Aprendizaje Visible y Enseñanza Efectiva",
-          "Fundamentos de la Evaluación y Diagnóstico Psicopedagógico",
-          "Pedagogía de la Identidad de Género",
-          "Teorías de la Educación"
-        ]
-      },
-      {
-        semestre: "5° Semestre",
-        asignaturas: [
-          "Teoría Evaluativa de la Enseñanza y el Aprendizaje",
-          "Psicopedagogía de la Familia en Educación Especial",
-          "Psicopedagogía y Didáctica de la Lengua Escrita",
-          "Psicopatología y Educación Especial II",
-          "Epistemología y Paradigmas de la Investigación Educacional",
-          "Práctica Pedagógica"
-        ]
-      },
-      {
-        semestre: "6° Semestre",
-        asignaturas: [
-          "Diseño de Procesos Evaluativos para el Aprendizaje",
-          "Diseño y Adaptación Curricular",
-          "Psicopedagogía y Didáctica del Lenguaje Oral y la Comunicación",
-          "Psicopedagogía de las Habilidades Sociales y la Convivencia Escolar",
-          "Psicopedagogía de la Expresión Plástica y Cognición",
-          "Metodología de la Investigación Educacional"
-        ]
-      },
-      {
-        semestre: "7° Semestre",
-        asignaturas: [
-          "Fundamentos para la Inclusión Educacional",
-          "Psicopedagogía y Didáctica de las Dificultades de Aprendizaje de la Lengua Escrita",
-          "Psicopedagogía y Didáctica de las Dificultades de Aprendizaje de las Matemáticas",
-          "Teoría y Aplicaciones Curriculares en la Evaluación Psicopedagógica",
-          "Práctica Pedagógica",
-          "Análisis de Proyectos de Investigación Educativa"
-        ]
-      },
-      {
-        semestre: "8° Semestre",
-        asignaturas: [
-          "Psicopedagogía y Didáctica de la Enseñanza de las Ciencias",
-          "Psicopedagogía del Pensamiento Crítico y Creativo",
-          "Diseño de Proyectos de Inclusión Educacional",
-          "Recursos Digitales para el Aprendizaje e Inclusión Educativa",
-          "Practicum en Evaluación y Diagnóstico Psicopedagógico",
-          "Seminario de Licenciatura"
-        ]
-      },
-      {
-        semestre: "9° Semestre",
-        asignaturas: [
-          "Psicopedagogía de la Atención Temprana",
-          "Psicopedagogía y Didáctica de la Psicomotricidad",
-          "Proyectos de Innovación Pedagógica para la Inclusión Educativa",
-          "Pensamiento Crítico y Resolución de Problemas"
-        ]
-      },
-      {
-        semestre: "10° Semestre",
-        asignaturas: [
-          "Práctica Profesional",
-          "Educación y Formación Ciudadana"
-        ]
-      }
-    ];
+    const subjects = {
+      "1° Semestre": [
+        "Socioantropología Educacional",
+        "Construcción de la Identidad Profesional Docente",
+        "Desarrollo Neurobiológico Humano",
+        "Lingüística",
+        "Procesos Cognitivos en el Aprendizaje Escolar",
+        "Desarrollo de Habilidades de Pensamiento"
+      ],
+      "2° Semestre": [
+        "Filosofía Educacional",
+        "Matemáticas Escolares",
+        "Psicolingüística",
+        "Neurociencias y Educación Especial",
+        "Práctica Pedagógica",
+        "Comunicación Oral y Escrita"
+      ],
+      "3° Semestre": [
+        "Enfoques Curriculares",
+        "Psicología del Aprendizaje y del Desarrollo",
+        "Psicopatología y Educación Especial I",
+        "Trastornos del Desarrollo del Habla, Lenguaje y Comunicación",
+        "Modelos y Teorías de las Dificultades de Aprendizaje Escolar",
+        "Desarrollo de la Comprensión Lectora en Inglés"
+      ],
+      "4° Semestre": [
+        "Gestión Educacional",
+        "Psicopedagogía y Didáctica del Pensamiento Lógico-Matemático",
+        "Aprendizaje Visible y Enseñanza Efectiva",
+        "Fundamentos de la Evaluación y Diagnóstico Psicopedagógico",
+        "Pedagogía de la Identidad de Género",
+        "Teorías de la Educación"
+      ],
+      "5° Semestre": [
+        "Teoría Evaluativa de la Enseñanza y el Aprendizaje",
+        "Psicopedagogía de la Familia en Educación Especial",
+        "Psicopedagogía y Didáctica de la Lengua Escrita",
+        "Psicopatología y Educación Especial II",
+        "Epistemología y Paradigmas de la Investigación Educacional",
+        "Práctica Pedagógica"
+      ],
+      "6° Semestre": [
+        "Diseño de Procesos Evaluativos para el Aprendizaje",
+        "Diseño y Adaptación Curricular",
+        "Psicopedagogía y Didáctica del Lenguaje Oral y la Comunicación",
+        "Psicopedagogía de las Habilidades Sociales y la Convivencia Escolar",
+        "Psicopedagogía de la Expresión Plástica y Cognición",
+        "Metodología de la Investigación Educacional"
+      ],
+      "7° Semestre": [
+        "Fundamentos para la Inclusión Educacional",
+        "Psicopedagogía y Didáctica de las Dificultades de la Lectura y del Aprendizaje de las Matemáticas",
+        "Teoría y Aplicaciones Curriculares de la Evaluación Psicopedagógica",
+        "Práctica Pedagógica",
+        "Análisis de Proyectos de Investigación Educativa"
+      ],
+      "8° Semestre": [
+        "Psicopedagogía y Didáctica de la Enseñanza de las Ciencias",
+        "Psicopedagogía del Pensamiento Crítico y Creativo",
+        "Diseño de Proyectos de Inclusión Educacional",
+        "Recursos Digitales para el Aprendizaje e Inclusión Educativa",
+        "Practicum en Evaluación y Diagnóstico Psicopedagógico",
+        "Seminario de Licenciatura"
+      ],
+      "9° Semestre": [
+        "Psicopedagogía de la Atención Temprana",
+        "Psicopedagogía y Didáctica de la Psicomotricidad",
+        "Proyectos de Innovación Pedagógica para la Inclusión Educativa",
+        "Pensamiento Crítico y Resolución de Problemas"
+      ],
+      "10° Semestre": [
+        "Práctica Profesional",
+        "Educación y Formación Ciudadana"
+      ]
+    };
 
-    const state = JSON.parse(localStorage.getItem("mallaEstado") || "{}")
+    const requisitos = {
+      "Psicopatología y Educación Especial I": ["Desarrollo Neurobiológico Humano"],
+      "Trastornos del Desarrollo del Habla, Lenguaje y Comunicación": ["Lingüística"],
+      "Neurociencias y Educación Especial": ["Desarrollo Neurobiológico Humano"],
+      "Psicopatología y Educación Especial II": ["Psicopatología y Educación Especial I"],
+      "Psicopedagogía y Didáctica del Pensamiento Lógico-Matemático": ["Matemáticas Escolares"],
+      "Psicopedagogía y Didáctica de la Lengua Escrita": ["Comunicación Oral y Escrita"],
+      "Psicopedagogía y Didáctica del Lenguaje Oral y la Comunicación": ["Lingüística"],
+      "Diseño y Adaptación Curricular": ["Enfoques Curriculares"],
+      "Psicopedagogía y Didáctica de las Dificultades de la Lectura y del Aprendizaje de las Matemáticas": ["Psicopedagogía y Didáctica del Pensamiento Lógico-Matemático"],
+      "Teoría y Aplicaciones Curriculares de la Evaluación Psicopedagógica": ["Fundamentos de la Evaluación y Diagnóstico Psicopedagógico"],
+      "Psicopedagogía del Pensamiento Crítico y Creativo": ["Desarrollo de Habilidades de Pensamiento"],
+      "Practicum en Evaluación y Diagnóstico Psicopedagógico": ["Fundamentos de la Evaluación y Diagnóstico Psicopedagógico"],
+      "Seminario de Licenciatura": ["Metodología de la Investigación Educacional"],
+      "Práctica Profesional": ["Práctica Pedagógica"]
+    };
 
-    function saveState() {
-      localStorage.setItem("mallaEstado", JSON.stringify(state));
+    const mallaDiv = document.getElementById('malla');
+    const completadas = JSON.parse(localStorage.getItem('materiasCompletadas') || '[]');
+
+    function guardarProgreso() {
+      localStorage.setItem('materiasCompletadas', JSON.stringify(completadas));
     }
 
-    function toggleAsignatura(clave) {
-      state[clave] = !state[clave];
-      saveState();
-      render();
+    function puedeActivarse(nombre) {
+      const reqs = requisitos[nombre];
+      return !reqs || reqs.every(r => completadas.includes(r));
     }
 
-    function render() {
-      const cont = document.getElementById("malla");
-      cont.innerHTML = "";
-      malla.forEach((sem, i) => {
-        const col = document.createElement("div");
-        col.className = "semester";
-        col.innerHTML = `<h2>${sem.semestre}</h2>`;
-        sem.asignaturas.forEach((asig, j) => {
-          const clave = `${i}-${j}`;
-          const div = document.createElement("div");
-          div.className = "subject";
-          div.textContent = asig;
-          if (state[clave]) div.classList.add("completed");
-          div.onclick = () => toggleAsignatura(clave);
-          col.appendChild(div);
+    for (const [semestre, ramos] of Object.entries(subjects)) {
+      const col = document.createElement('div');
+      col.className = 'semester';
+      col.innerHTML = `<h2>${semestre}</h2>`;
+      ramos.forEach(materia => {
+        const div = document.createElement('div');
+        div.textContent = materia;
+        div.className = 'subject';
+        if (completadas.includes(materia)) {
+          div.classList.add('completed');
+        } else if (!puedeActivarse(materia)) {
+          div.classList.add('locked');
+          div.setAttribute('data-tooltip', 'Requiere: ' + requisitos[materia].join(', '));
+        }
+
+        div.addEventListener('click', () => {
+          if (div.classList.contains('locked')) return;
+          div.classList.toggle('completed');
+          if (div.classList.contains('completed')) {
+            completadas.push(materia);
+          } else {
+            const i = completadas.indexOf(materia);
+            if (i >= 0) completadas.splice(i, 1);
+          }
+          guardarProgreso();
+          location.reload();
         });
-        cont.appendChild(col);
-      });
-    }
 
-    render();
+        col.appendChild(div);
+      });
+      mallaDiv.appendChild(col);
+    }
   </script>
 </body>
 </html>
