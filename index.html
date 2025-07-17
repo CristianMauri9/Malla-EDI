@@ -5,92 +5,77 @@
   <title>Pedagogía en Educación Diferencial</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: "Segoe UI", sans-serif;
+      background: #e6f7ff;
       margin: 0;
       padding: 1rem;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
-      color: #333;
+      color: #034f84;
     }
-
     h1 {
       text-align: center;
-      color: #0077b6;
-      margin-bottom: 2rem;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      font-size: 2.2rem;
+      color: #007acc;
+      margin-bottom: 1rem;
     }
-
     .grid {
       display: flex;
       overflow-x: auto;
       gap: 1rem;
       padding: 1rem 0;
     }
-
     .semester {
-      background: #ffffffd9;
+      background: #ffffff;
+      border: 2px solid #a3dfff;
       border-radius: 12px;
       padding: 1rem;
-      min-width: 250px;
+      min-width: 220px;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
     }
-
-    .semester:hover {
-      transform: scale(1.02);
-    }
-
     .semester h2 {
-      text-align: center;
-      color: #0288d1;
       font-size: 1.3rem;
-      margin-bottom: 0.75rem;
-      border-bottom: 2px solid #81d4fa;
+      text-align: center;
+      margin-bottom: 0.7rem;
+      color: #0099cc;
+      border-bottom: 1px solid #b3e0ff;
       padding-bottom: 0.3rem;
     }
-
     .subject {
-      background: #e1f5fe;
-      border-radius: 8px;
-      padding: 0.6rem 0.8rem;
-      margin: 0.5rem 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: #f0fbff;
+      border-left: 5px solid #66c2ff;
+      border-radius: 6px;
+      padding: 0.5rem;
+      margin: 0.4rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       cursor: pointer;
       position: relative;
-      transition: all 0.2s;
+      transition: all 0.2s ease-in-out;
     }
-
     .subject:hover {
-      background: #b3e5fc;
+      background: #d7f0ff;
     }
-
     .subject.completed {
-      background: #a5d6a7;
+      background: #ccf3e0;
       text-decoration: line-through;
-      color: #2e7d32;
-      font-weight: bold;
+      border-left-color: #2ecc71;
     }
-
     .subject.locked {
-      background: #eeeeee;
-      color: #999;
+      background: #e0e0e0;
+      color: #888;
       cursor: not-allowed;
-      border-left: 4px solid #ccc;
+      border-left-color: #999;
     }
-
     .subject.locked:hover::after {
       content: attr(data-tooltip);
       position: absolute;
-      bottom: 110%;
+      bottom: 100%;
       left: 0;
-      background: #0288d1;
+      background: #333;
       color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      border-radius: 4px;
       white-space: nowrap;
       font-size: 0.75rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -113,7 +98,7 @@
         "Matemáticas Escolares",
         "Psicolingüística",
         "Neurociencias y Educación Especial",
-        "Práctica Pedagógica",
+        "Práctica Pedagógica I",
         "Comunicación Oral y Escrita"
       ],
       "3° Semestre": [
@@ -138,7 +123,7 @@
         "Psicopedagogía y Didáctica de la Lengua Escrita",
         "Psicopatología y Educación Especial II",
         "Epistemología y Paradigmas de la Investigación Educacional",
-        "Práctica Pedagógica"
+        "Práctica Pedagógica II"
       ],
       "6° Semestre": [
         "Diseño de Procesos Evaluativos para el Aprendizaje",
@@ -152,7 +137,7 @@
         "Fundamentos para la Inclusión Educacional",
         "Psicopedagogía y Didáctica de las Dificultades de la Lectura y del Aprendizaje de las Matemáticas",
         "Teoría y Aplicaciones Curriculares de la Evaluación Psicopedagógica",
-        "Práctica Pedagógica",
+        "Práctica Pedagógica III",
         "Análisis de Proyectos de Investigación Educativa"
       ],
       "8° Semestre": [
@@ -189,7 +174,9 @@
       "Psicopedagogía del Pensamiento Crítico y Creativo": ["Desarrollo de Habilidades de Pensamiento"],
       "Practicum en Evaluación y Diagnóstico Psicopedagógico": ["Fundamentos de la Evaluación y Diagnóstico Psicopedagógico"],
       "Seminario de Licenciatura": ["Metodología de la Investigación Educacional"],
-      "Práctica Profesional": ["Práctica Pedagógica"]
+      "Práctica Pedagógica II": ["Práctica Pedagógica I"],
+      "Práctica Pedagógica III": ["Práctica Pedagógica II"],
+      "Práctica Profesional": ["Práctica Pedagógica III"]
     };
 
     const mallaDiv = document.getElementById('malla');
@@ -216,7 +203,7 @@
           div.classList.add('completed');
         } else if (!puedeActivarse(materia)) {
           div.classList.add('locked');
-          div.setAttribute('data-tooltip', 'Requiere: ' + requisitos[materia].join(', '));
+          div.setAttribute('data-tooltip', 'Requiere: ' + requisitos[materia]?.join(', '));
         }
 
         div.addEventListener('click', () => {
